@@ -1,0 +1,64 @@
+version: '3'
+services:
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      webnet:
+        aliases:
+          - visualizer
+  edge:
+    image: sakorkko/hajarimanager
+    build: ./manager
+    ports:
+      - "5000:5000"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      webnet:
+        aliases:
+          - manager
+  worker1:
+    image: sakorkko/hajariworker
+    hostname: worker1
+    build: ./worker
+    ports:
+     - "5001:5000"
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+    networks:
+      - webnet
+  worker2:
+    image: sakorkko/hajariworker
+    hostname: worker2
+    build: ./worker
+    ports:
+     - "5002:5000"
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+    networks:
+      - webnet
+  worker3:
+    image: sakorkko/hajariworker
+    hostname: worker3
+    build: ./worker
+    ports:
+     - "5003:5000"
+    deploy:
+      placement:
+        constraints: [node.role == worker]
+    networks:
+      - webnet
+networks:
+  webnet:
