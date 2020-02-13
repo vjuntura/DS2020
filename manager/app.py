@@ -1,17 +1,10 @@
 from flask import Flask, render_template, url_for, request, jsonify
-from flask_mysqldb import MySQL
 from statistics import mean
+import requests
 
 data = {}
 
 app = Flask(__name__)
-
-app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'sensorDB'
-
-mysql = MySQL(app)
 
 @app.route("/")
 def index():
@@ -25,14 +18,11 @@ def index():
 
     if len(data[sensor]) > 5:
         # Handle data
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO sensorTable(sensor, data) VALUES (%s, %s)", (sensor, mean(data[sensor])))
-        mysql.connection.commit()
-        cur.close()
+        r = requests.get("http://192.168.43.216:5000/?value=" + str(int(mean(data[sensor]))) + "&sensor=" + str(sensor))
         del data[sensor]
 
     return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
