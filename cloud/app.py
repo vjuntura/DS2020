@@ -15,7 +15,7 @@ mysql = MySQL(app)
 @app.route("/")
 def index():
     temperature = int(request.args.get('value'))
-    sensor = request.args.get('sensor')
+    sensor = str(request.args.get('sensor'))
 
     # Handle data
     cur = mysql.connection.cursor()
@@ -26,5 +26,5 @@ def index():
     return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0	')
 
