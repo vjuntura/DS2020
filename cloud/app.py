@@ -5,6 +5,7 @@ data = {}
 
 app = Flask(__name__)
 
+#Configure database 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'password'
@@ -14,10 +15,11 @@ mysql = MySQL(app)
 
 @app.route("/")
 def index():
+    #Take values from GET request
     temperature = int(request.args.get('value'))
     sensor = str(request.args.get('sensor'))
 
-    # Handle data
+    #Send data to the database
     cur = mysql.connection.cursor()
     cur.execute("INSERT INTO sensorTable(sensor, data) VALUES (%s, %s)", (sensor, temperature))
     mysql.connection.commit()
