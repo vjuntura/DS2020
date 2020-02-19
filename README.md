@@ -7,7 +7,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You will need to have following software installed.
 
 ```
 docker
@@ -56,6 +56,8 @@ python cloud/app.py
 * [Docker](https://www.docker.com/) - Deployment and virtualization.
 * [Python](https://www.python.org/) 
 * [Flask](https://palletsprojects.com/p/flask/) - Web service deployment
+* [MySQL](https://www.mysql.com/) - Database
+
 
 
 
