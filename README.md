@@ -1,6 +1,9 @@
 # DS2020
 Distributed Systems 2020 course work
 
+# Authors
+Väinö Juntura, Samuli Körkkö, Santeri Raittinen
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
